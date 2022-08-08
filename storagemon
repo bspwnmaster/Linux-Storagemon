@@ -29,14 +29,14 @@ if [ "$checkme" ] && [ "$newalert" ]
 then
     touch -m ~/Documents/tests/lastemail.txt
     #echo -e "here" "\n" > "~/Documents/tests/lastemail.txt"
-echo -e "$fulloutput\n\n""$drives\n\n""$dirsize"
-#echo -e "$fulloutput\n\n""$drives\n\n""$dirsize" | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
+    echo -e "$fulloutput\n\n""$drives\n\n""$dirsize"
+    #echo -e "$fulloutput\n\n""$drives\n\n""$dirsize" | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
     #echo "Storage Free Threshold Met" 2>&1 | mail -s "Storage Error" example@gmail[.]com
 #echo $drives 2>&1 | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
 #echo $drives $largeness 2>&1 | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
 else
 #echo "parameters not met"
-exit 0
+    exit 0
 fi
 # PagerDuty Emergency
 #alert@alert.pagerduty.com
