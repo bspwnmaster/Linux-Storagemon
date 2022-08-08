@@ -5,6 +5,7 @@
 #du -hS /nsm/| sort -rh | head -5
 #ls -alh
 #df -hT
+#find ~/Logs/ -name "*.txt" -type f -mtime +20 -delete #delete txt files w/ modification dates greater than 20 days
 #df -hT | grep -i "/dev/"
 #du -hS /dev/| sort -rh | head -5
 #echo "Storage Free Threshold Met" 2>&1 | mail -s ""
