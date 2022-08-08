@@ -1,0 +1,45 @@
+#!/bin/bash
+#/mnt/*
+#Folder Structures: etc, home, root, boot, usr, opt, var, nsm
+#df -h --output='pcent' / | awk 'NR==2 {gsub("%","") ; if ($1 >= 94) print $1 ; else print "False"}'
+#du -hS /nsm/| sort -rh | head -5
+#ls -alh
+#df -hT
+#df -hT | grep -i "/dev/"
+#du -hS /dev/| sort -rh | head -5
+#echo "Storage Free Threshold Met" 2>&1 | mail -s ""
+#df -h --output='pcent','source','size' /dev/
+#+
+#df -h --output='pcent','source','size' /
+#Folder Structures to monitor: etc, home, root, boot, usr, opt, var, nsm
+#Grepping particular drives can change system to system "df -h /", grep /dev/, /dev/mapper/
+#Every Hour
+# touch /etc/cron.d/checkstorage
+# 0 * * * * root /root/checkstorage.sh
+checkme="$(df -h --output='pcent' / | awk 'NR==2 {gsub("%","") ; if ($1 >= 10) print $1}')"
+drives="$(df -hT | grep -i "/dev/")"
+dirsize="$(du --max-depth=1 -h / 2>&1 | grep -v "cannot" | sort -rh | head -20)"
+fulloutput="$(df -h --output='size','pcent','source','avail' /)"
+#find if last email alert was sent within last day, if no then email
+newalert="$(find -type f -name printjobs.txt -mtime +1)"
+#echo "$newalert"
+#echo "$checkme"
+#if over storage threshold & last email was sent a day ago 
+if [ "$checkme" ] && [ "$newalert" ]
+then
+    touch -m ~/Documents/tests/lastemail.txt
+    #echo -e "here" "\n" > "~/Documents/tests/lastemail.txt"
+echo -e "$fulloutput\n\n""$drives\n\n""$dirsize"
+#echo -e "$fulloutput\n\n""$drives\n\n""$dirsize" | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
+    #echo "Storage Free Threshold Met" 2>&1 | mail -s "Storage Error" example@gmail[.]com
+#echo $drives 2>&1 | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
+#echo $drives $largeness 2>&1 | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
+else
+#echo "parameters not met"
+exit 0
+fi
+# PagerDuty Emergency
+#alert@alert.pagerduty.com
+#echo "Alert!" 2>&1 | mail -s "Storage threshold met" alert@alert.pagerduty.com
+#ncdu
+#duf
