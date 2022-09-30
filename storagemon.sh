@@ -11,7 +11,7 @@ df -h --output='pcent','source','size' /nsm/
 df -h --output='pcent','source','size' /
 
 #!/bin/bash
-#Folder Structures to monitor: etc, home, root, boot, usr, opt, var, nsm 
+#Folder Structures to monitor: etc, home, root, boot, usr, opt, var
 #Grepping particular drives can change system to system "df -h /", grep /dev/, /dev/mapper/
 #Every Minute
 
@@ -23,13 +23,13 @@ largeness="$(du -hS /nsm/| sort -rh | head -5)"
 
 if [ "$checkme" ]
 then
-    #echo "here"
-	df -hT
+	#echo "here"
+df -hT
 	du -hS /nsm/| sort -rh | head -5
-    #echo "Storage Free Threshold Met" 2>&1 | mail -s "Storage Error" example@gmail[.]com
+	#echo "Storage Free Threshold Met" 2>&1 | mail -s "Storage Error" example@gmail[.]com
 	echo $drives $largeness 2>&1 | mail -s "Storage Free Threshold Met" alert@alert.pagerduty.com
 elif [ -z "$checkme" ]
 then
-    #echo "not here"
-    exit 0
+	#echo "not here"
+	exit 0
 fi
